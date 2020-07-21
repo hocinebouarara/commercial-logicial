@@ -1,0 +1,15 @@
+.search-box {	
+    -fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, -fx-control-inner-background;
+    -fx-background-insets: -1, -1, 0;
+    -fx-background-radius: 14, 14, 14;    
+    -fx-text-fill: -fx-text-inner-color;
+    -fx-prompt-text-fill: derive(-fx-control-inner-background,-30%);
+    -fx-cursor: text;
+}
+
+.search-box:focused {
+    -fx-background-color: -fx-focus-color, -fx-control-inner-background;
+    -fx-background-insets: -1.4, 0;
+    -fx-background-radius: 14;
+}
+
