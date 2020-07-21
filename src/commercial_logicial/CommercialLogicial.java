@@ -5,6 +5,7 @@
  */
 package commercial_logicial;
 
+import helpers.Links;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -25,9 +26,9 @@ public class CommercialLogicial extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/products/productsView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(Links.CLIENTSVIEW));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(CommercialLogicial.class.getResource("/products/productsview.css").toExternalForm());
+        scene.getStylesheets().add(CommercialLogicial.class.getResource(Links.CLIENTSCSS).toExternalForm());
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
