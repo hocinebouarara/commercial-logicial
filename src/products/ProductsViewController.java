@@ -236,8 +236,8 @@ public class ProductsViewController implements Initializable {
 
     }
 
-    @FXML
-    public void isRegister(ActionEvent event) throws SQLException {
+    
+    public void isRegister() throws SQLException {
         connection = DbConnect.getConnect();
 
         if (update == false) {
@@ -254,13 +254,15 @@ public class ProductsViewController implements Initializable {
             
 
         }
+        
 
         insert();
         clean();
 
     }
-
-    public void Registersign() {
+  
+    @FXML
+    public void Registersign() throws SQLException {
 
         String reference = refField.getText();
         String designation = desigField.getText();
@@ -281,6 +283,10 @@ public class ProductsViewController implements Initializable {
             alert.setContentText("Please Fill All DATA");
             alert.showAndWait();
             return;
+        }else{
+            isRegister();
+            insert();
+            clean();
         }
 
     }
