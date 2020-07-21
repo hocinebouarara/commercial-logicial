@@ -34,7 +34,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
-import modules.Products;
+import models.Products;
 
 /**
  * FXML Controller class
