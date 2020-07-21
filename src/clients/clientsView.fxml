@@ -190,7 +190,7 @@
                                                 </TextField>
                                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <children>
-                                                      <JFXButton onAction="#isRegister" prefWidth="100.0" style="-fx-background-color: #76FF03;" text="Save" textFill="#fff3f3">
+                                                      <JFXButton onAction="#Registersign" prefWidth="100.0" style="-fx-background-color: #76FF03;" text="Save" textFill="#fff3f3">
                                                          <HBox.margin>
                                                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                          </HBox.margin>

@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -30,6 +31,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
+import javax.swing.JOptionPane;
 import models.Clients;
 import models.Products;
 import products.ProductsViewController;
@@ -98,13 +100,33 @@ public class ClientsViewController implements Initializable {
     private void getSelected(MouseEvent event) {
     }
 
-    @FXML
-    private void isRegister(ActionEvent event) {
+    
+    private void isRegister() {
+        
+        connection = DbConnect.getConnect();
+
+        if (update == false) {
+
+            query = "INSERT INTO `client` (NOCL, ADCL,VICL, TECL,FACL,NORECL) VALUES (?, ?, ?,?, ?, ?)";
+
+        } else {
+
+            query = "UPDATE `client` SET `NOCL`=?,`"
+                    + "ADCL`=?,`VICL`=?,"
+                    + "`TECL`=?,"
+                    + "`FACL`=?,`NORECL`=?,"
+                    + " WHERE IDCL = '" + client.getId() + "'";
+            
+
+        }
+        
+
+        
+        
     }
 
-    @FXML
-    private void clean(MouseEvent event) {
-    }
+    
+    
     
     
     private void loadData() throws SQLException {
@@ -159,7 +181,7 @@ public class ClientsViewController implements Initializable {
 
                                 Clients client = getTableView().getItems().get(getIndex());
 
-                                query = "delete from article where IDAR = '" + client.getId() + "'";
+                                query = "delete from client where IDAR = '" + client.getId() + "'";
                                 connection = DbConnect.getConnect();
                                 preparedStatement = connection.prepareStatement(query);
                                 preparedStatement.execute();
@@ -238,5 +260,69 @@ public class ClientsViewController implements Initializable {
         }
 
     }
+
+     public void insert() {
+
+        try {
+            
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, NameField.getText());
+            preparedStatement.setString(2, AdressField.getText());
+            preparedStatement.setString(3, CityField.getText());
+            preparedStatement.setString(4, PhoneField.getText());
+            preparedStatement.setString(5, FaxField.getText());
+            preparedStatement.setString(6, ReprField.getText());
+           
+       
+
+            preparedStatement.execute();
+            refreshTable();
+            //JOptionPane.showMessageDialog(null, "succes");
+        } catch (Exception e) {
+            // TODO: handle exception
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void clean() {
+        NameField.setText(null);
+        AdressField.setText(null);
+        CityField.setText(null);
+        PhoneField.setText(null);
+        FaxCol.setText(null);
+        ReprField.setText(null);
+        
+        update=false;
+    }
+
+    @FXML
+    private void Registersign(ActionEvent event) {
+         String name = NameField.getText();
+        String adress = AdressField.getText();
+        String city = CityField.getText();
+        String phone = PhoneField.getText();
+        String fax = FaxField.getText();
+        String representative = ReprField.getText();
+        
+
+        if (name.isEmpty() || adress.isEmpty()
+                || city.isEmpty() || phone.isEmpty()
+                || fax.isEmpty() || representative.isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Please Fill All DATA");
+            alert.showAndWait();
+            return;
+        }else{
+            isRegister();
+            insert();
+            clean();
+            
+        }
+    }
+
     
 }
