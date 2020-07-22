@@ -17,4 +17,7 @@ public class Links {
     public static String CLIENTSVIEW = "/clients/clientsView.fxml";
     public static String CLIENTSCSS = "/clients/clientsview.css";
 
+    public static String PROVIDERSVIEW = "/providers/providersView.fxml";
+    public static String PROVIDERCSS = "/providers/providersview.css";
+
 }
