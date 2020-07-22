@@ -309,7 +309,7 @@ public class ClientsViewController implements Initializable {
         AdressField.setText(null);
         CityField.setText(null);
         PhoneField.setText(null);
-        FaxCol.setText(null);
+        FaxField.setText(null);
         ReprField.setText(null);
 
         update = false;
