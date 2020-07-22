@@ -68,8 +68,6 @@ public class ProductsViewController implements Initializable {
     @FXML
     private TextField refField;
     @FXML
-    private TextField idfield;
-    @FXML
     private TextField desigField;
     @FXML
     private TextField catField;
@@ -236,7 +234,6 @@ public class ProductsViewController implements Initializable {
 
     }
 
-    
     public void isRegister() throws SQLException {
         connection = DbConnect.getConnect();
 
@@ -251,18 +248,13 @@ public class ProductsViewController implements Initializable {
                     + "`SEAR`=?,"
                     + "`PRAC`=?,`PRVE`=?,`PRTA`=?,"
                     + "`PRTV`=? WHERE IDAR = '" + product.getId() + "'";
-            
 
         }
-        
-
-        insert();
-        clean();
 
     }
-  
+
     @FXML
-    public void Registersign() throws SQLException {
+    public void Registersign(ActionEvent event) throws SQLException {
 
         String reference = refField.getText();
         String designation = desigField.getText();
@@ -283,7 +275,7 @@ public class ProductsViewController implements Initializable {
             alert.setContentText("Please Fill All DATA");
             alert.showAndWait();
             return;
-        }else{
+        } else {
             isRegister();
             insert();
             clean();
@@ -318,12 +310,9 @@ public class ProductsViewController implements Initializable {
 
     }
 
-   
-
     public void insert() {
 
         try {
-            Registersign();
 
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, refField.getText());
@@ -345,6 +334,7 @@ public class ProductsViewController implements Initializable {
 
     }
 
+    @FXML
     public void clean() {
         refField.setText(null);
         desigField.setText(null);
@@ -355,7 +345,7 @@ public class ProductsViewController implements Initializable {
         totbuyField.setText(null);
         saleField.setText(null);
         totsalField.setText(null);
-        update=false;
+        update = false;
     }
 
 }
