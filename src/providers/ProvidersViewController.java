@@ -186,7 +186,7 @@ public class ProvidersViewController implements Initializable {
                             FaxField.setText(provider.getFax());
                             CnssField1.setText(provider.getCnss());
 
-                            System.out.println(provider.getId());
+                            
 
                         });
 
@@ -312,6 +312,15 @@ public class ProvidersViewController implements Initializable {
 
     @FXML
     private void clean() {
+        NameField.setText(null);
+        RepreField.setText(null);
+        AdressField.setText(null);
+        CityField.setText(null);
+        PhoneField.setText(null);
+        FaxField.setText(null);
+        CnssField1.setText(null);
+      
+        update = false;
     }
 
 }
