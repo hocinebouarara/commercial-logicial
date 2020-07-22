@@ -288,7 +288,12 @@ public class ProvidersViewController implements Initializable {
 
                         
 
-            
+            query = "UPDATE `FOURNISSEUR` SET `NOFR`=?,`NORE`=?,`"
+                    + "ADFR`=?,`VIFR`=?,"
+                    + "`TEFR`=?,"
+                    + "`FAFR`=?,`CNSS`=? WHERE IDFO ='" + provider.getId()+ "'";
+                                        
+
 
         }
     }
