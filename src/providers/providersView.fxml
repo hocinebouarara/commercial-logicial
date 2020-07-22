@@ -30,7 +30,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
-            <Tab text="MANAGE CLIENTS">
+            <Tab text="MANAGE PROVIDERS">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -38,7 +38,7 @@
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <TextField layoutX="652.0" layoutY="7.0" prefHeight="0.0" prefWidth="359.0" promptText="  Search product by name" stylesheets="@../../../aa-master/src/products/products.css">
+                                    <TextField layoutX="652.0" layoutY="7.0" prefHeight="5.0" prefWidth="359.0" promptText="  Search product by name" stylesheets="@../../../aa-master/src/products/products.css">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
