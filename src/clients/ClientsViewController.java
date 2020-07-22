@@ -73,14 +73,14 @@ public class ClientsViewController implements Initializable {
     private TextField FaxField;
     @FXML
     private TextField ReprField;
-    
+
     ObservableList<Clients> clientssList = FXCollections.observableArrayList();
 
     String query = null;
     Connection connection = null;
     ResultSet resultSet = null;
     PreparedStatement preparedStatement = null;
-    Products client;
+    Clients client;
     boolean update = false;
 
     /**
@@ -94,41 +94,8 @@ public class ClientsViewController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(ClientsViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-
-    @FXML
-    private void getSelected(MouseEvent event) {
     }
 
-    
-    private void isRegister() {
-        
-        connection = DbConnect.getConnect();
-
-        if (update == false) {
-
-            query = "INSERT INTO `client` (NOCL, ADCL,VICL, TECL,FACL,NORECL) VALUES (?, ?, ?,?, ?, ?)";
-
-        } else {
-
-            query = "UPDATE `client` SET `NOCL`=?,`"
-                    + "ADCL`=?,`VICL`=?,"
-                    + "`TECL`=?,"
-                    + "`FACL`=?,`NORECL`=?,"
-                    + " WHERE IDCL = '" + client.getId() + "'";
-            
-
-        }
-        
-
-        
-        
-    }
-
-    
-    
-    
-    
     private void loadData() throws SQLException {
 
         refreshTable();
@@ -136,11 +103,11 @@ public class ClientsViewController implements Initializable {
         IdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         NameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
         AdressCol.setCellValueFactory(new PropertyValueFactory<>("Adress"));
-         CityCol.setCellValueFactory(new PropertyValueFactory<>("City"));
+        CityCol.setCellValueFactory(new PropertyValueFactory<>("City"));
         PhoneCol.setCellValueFactory(new PropertyValueFactory<>("Phone"));
         FaxCol.setCellValueFactory(new PropertyValueFactory<>("Fax"));
         ReprCol.setCellValueFactory(new PropertyValueFactory<>("RepresCl"));
-             
+
         // ManageCol.setCellValueFactory(new PropertyValueFactory("update"));
         // insert btn in every row
         Callback<TableColumn<Clients, String>, TableCell<Clients, String>> cellFoctory = (TableColumn<Clients, String> param) -> {
@@ -181,7 +148,7 @@ public class ClientsViewController implements Initializable {
 
                                 Clients client = getTableView().getItems().get(getIndex());
 
-                                query = "delete from client where IDAR = '" + client.getId() + "'";
+                                query = "delete from client where IDCL = '" + client.getId() + "'";
                                 connection = DbConnect.getConnect();
                                 preparedStatement = connection.prepareStatement(query);
                                 preparedStatement.execute();
@@ -204,14 +171,15 @@ public class ClientsViewController implements Initializable {
                         editButton.setOnAction(event -> {
 
                             update = true;
-                           Clients client= getTableView().getItems().get(getIndex());
+                            client = getTableView().getItems().get(getIndex());
                             NameField.setText(client.getName());
                             AdressField.setText(client.getAdress());
                             CityField.setText(client.getCity());
                             PhoneField.setText(client.getPhone());
                             FaxField.setText(client.getFax());
                             ReprField.setText(client.getRepresCl());
-                          
+                            
+                            System.out.println(client.getId());
 
                         });
 
@@ -233,9 +201,62 @@ public class ClientsViewController implements Initializable {
 
     }
 
+    @FXML
+    private void getSelected(MouseEvent event) {
+    }
+
+    private void isRegister() {
+
+        connection = DbConnect.getConnect();
+
+        if (update == false) {
+
+            query = "INSERT INTO `client` (NOCL, ADCL,VICL, TECL,FACL,NORECL) VALUES (?, ?, ?,?, ?, ?)";
+
+        } else {
+
+            query = "UPDATE `client` SET `NOCL`=?,`"
+                    + "ADCL`=?,`VICL`=?,"
+                    + "`TECL`=?,"
+                    + "`FACL`=?,`NORECL`=? WHERE idcl ='" + client.getId()+ "'";
+                                        
+            System.out.println(client.getId());
+
+            
+
+        }
+
+    }
+
+    @FXML
+    private void Registersign(ActionEvent event) {
+        String name = NameField.getText();
+        String adress = AdressField.getText();
+        String city = CityField.getText();
+        String phone = PhoneField.getText();
+        String fax = FaxField.getText();
+        String representative = ReprField.getText();
+
+        if (name.isEmpty() || adress.isEmpty()
+                || city.isEmpty() || phone.isEmpty()
+                || fax.isEmpty() || representative.isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Please Fill All DATA");
+            alert.showAndWait();
+            return;
+        } else {
+            isRegister();
+            insert();
+            clean();
+
+        }
+    }
+
     private void refreshTable() {
-        
-         clientssList.clear();
+
+        clientssList.clear();
 
         try {
             connection = DbConnect.getConnect();
@@ -261,10 +282,9 @@ public class ClientsViewController implements Initializable {
 
     }
 
-     public void insert() {
+    public void insert() {
 
         try {
-            
 
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, NameField.getText());
@@ -273,8 +293,6 @@ public class ClientsViewController implements Initializable {
             preparedStatement.setString(4, PhoneField.getText());
             preparedStatement.setString(5, FaxField.getText());
             preparedStatement.setString(6, ReprField.getText());
-           
-       
 
             preparedStatement.execute();
             refreshTable();
@@ -293,36 +311,8 @@ public class ClientsViewController implements Initializable {
         PhoneField.setText(null);
         FaxCol.setText(null);
         ReprField.setText(null);
-        
-        update=false;
+
+        update = false;
     }
 
-    @FXML
-    private void Registersign(ActionEvent event) {
-         String name = NameField.getText();
-        String adress = AdressField.getText();
-        String city = CityField.getText();
-        String phone = PhoneField.getText();
-        String fax = FaxField.getText();
-        String representative = ReprField.getText();
-        
-
-        if (name.isEmpty() || adress.isEmpty()
-                || city.isEmpty() || phone.isEmpty()
-                || fax.isEmpty() || representative.isEmpty()) {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("Please Fill All DATA");
-            alert.showAndWait();
-            return;
-        }else{
-            isRegister();
-            insert();
-            clean();
-            
-        }
-    }
-
-    
 }
