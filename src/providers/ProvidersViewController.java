@@ -154,7 +154,7 @@ public class ProvidersViewController implements Initializable {
 
                                 Providers provider = getTableView().getItems().get(getIndex());
 
-                                query = "delete from client where IDCL = '" + provider.getId() + "'";
+                                query = "delete from FOURNISSEUR where IDFO = '" + provider.getId() + "'";
                                 connection = DbConnect.getConnect();
                                 preparedStatement = connection.prepareStatement(query);
                                 preparedStatement.execute();
@@ -212,19 +212,35 @@ public class ProvidersViewController implements Initializable {
     private void getSelected(MouseEvent event) {
     }
 
+    private void isRegister() {
+        connection = DbConnect.getConnect();
+
+        if (update == false) {
+
+            query = "INSERT INTO `fournisseur` (NOFR,NORE, ADFR,VIFR, TEFR,FAFR,CNSS) VALUES (?, ?,?, ?,?, ?, ?)";
+
+        } else {
+
+            query = "UPDATE `FOURNISSEUR` SET `NOFR`=?,`NORE`=?,`"
+                    + "ADFR`=?,`VIFR`=?,"
+                    + "`TEFR`=?,"
+                    + "`FAFR`=?,`CNSS`=? WHERE IDFO ='" + provider.getId() + "'";
+
+        }
+    }
+
     @FXML
     private void Registersign(ActionEvent event) {
-        
+
         String name = NameField.getText();
         String representative = RepreField.getText();
         String adress = AdressField.getText();
         String city = CityField.getText();
         String phone = PhoneField.getText();
         String fax = FaxField.getText();
-        String cnss=CnssField1.getText();
-        
+        String cnss = CnssField1.getText();
 
-        if (name.isEmpty() || representative.isEmpty()|| adress.isEmpty()
+        if (name.isEmpty() || representative.isEmpty() || adress.isEmpty()
                 || city.isEmpty() || phone.isEmpty()
                 || fax.isEmpty() || cnss.isEmpty()) {
 
@@ -239,10 +255,6 @@ public class ProvidersViewController implements Initializable {
             clean();
 
         }
-    }
-
-    @FXML
-    private void clean() {
     }
 
     private void refreshTable() {
@@ -277,29 +289,8 @@ public class ProvidersViewController implements Initializable {
 
     }
 
-    private void isRegister() {
-         connection = DbConnect.getConnect();
-
-        if (update == false) {
-
-            query = "INSERT INTO `fournisseur` (NOFR,NORE, ADFR,VIFR, TEFR,FAFR,CNSS) VALUES (?, ?,?, ?,?, ?, ?)";
-
-        } else {
-
-                        
-
-            query = "UPDATE `FOURNISSEUR` SET `NOFR`=?,`NORE`=?,`"
-                    + "ADFR`=?,`VIFR`=?,"
-                    + "`TEFR`=?,"
-                    + "`FAFR`=?,`CNSS`=? WHERE IDFO ='" + provider.getId()+ "'";
-                                        
-
-
-        }
-    }
-
     private void insert() {
-         try {
+        try {
 
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, NameField.getText());
@@ -309,7 +300,6 @@ public class ProvidersViewController implements Initializable {
             preparedStatement.setString(5, PhoneField.getText());
             preparedStatement.setString(6, FaxField.getText());
             preparedStatement.setString(7, CnssField1.getText());
-            
 
             preparedStatement.execute();
             refreshTable();
@@ -318,6 +308,10 @@ public class ProvidersViewController implements Initializable {
             // TODO: handle exception
             JOptionPane.showMessageDialog(null, e);
         }
+    }
+
+    @FXML
+    private void clean() {
     }
 
 }
