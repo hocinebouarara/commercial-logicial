@@ -26,9 +26,9 @@ public class CommercialLogicial extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(Links.CLIENTSVIEW));
+        Parent root = FXMLLoader.load(getClass().getResource(Links.PROVIDERSVIEW));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(CommercialLogicial.class.getResource(Links.CLIENTSCSS).toExternalForm());
+        scene.getStylesheets().add(CommercialLogicial.class.getResource(Links.PROVIDERCSS).toExternalForm());
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
