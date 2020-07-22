@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -30,6 +31,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
+import javax.swing.JOptionPane;
 import models.Clients;
 import models.Providers;
 import products.ProductsViewController;
@@ -212,6 +214,31 @@ public class ProvidersViewController implements Initializable {
 
     @FXML
     private void Registersign(ActionEvent event) {
+        
+        String name = NameField.getText();
+        String representative = RepreField.getText();
+        String adress = AdressField.getText();
+        String city = CityField.getText();
+        String phone = PhoneField.getText();
+        String fax = FaxField.getText();
+        String cnss=CnssField1.getText();
+        
+
+        if (name.isEmpty() || representative.isEmpty()|| adress.isEmpty()
+                || city.isEmpty() || phone.isEmpty()
+                || fax.isEmpty() || cnss.isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Please Fill All DATA");
+            alert.showAndWait();
+            return;
+        } else {
+            isRegister();
+            insert();
+            clean();
+
+        }
     }
 
     @FXML
@@ -248,6 +275,44 @@ public class ProvidersViewController implements Initializable {
             System.err.print(e);
         }
 
+    }
+
+    private void isRegister() {
+         connection = DbConnect.getConnect();
+
+        if (update == false) {
+
+            query = "INSERT INTO `fournisseur` (NOFR,NORE, ADFR,VIFR, TEFR,FAFR,CNSS) VALUES (?, ?,?, ?,?, ?, ?)";
+
+        } else {
+
+                        
+
+            
+
+        }
+    }
+
+    private void insert() {
+         try {
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, NameField.getText());
+            preparedStatement.setString(2, RepreField.getText());
+            preparedStatement.setString(3, AdressField.getText());
+            preparedStatement.setString(4, CityField.getText());
+            preparedStatement.setString(5, PhoneField.getText());
+            preparedStatement.setString(6, FaxField.getText());
+            preparedStatement.setString(7, CnssField1.getText());
+            
+
+            preparedStatement.execute();
+            refreshTable();
+            //JOptionPane.showMessageDialog(null, "succes");
+        } catch (Exception e) {
+            // TODO: handle exception
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
 }
